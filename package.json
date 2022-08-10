@@ -1,0 +1,17 @@
+{
+  "name": "@onwidget/astrowind",
+  "description": "A template to make your website using Astro + Tailwind CSS.",
+  "version": "0.0.3",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^0.3.0",
+    "@astrojs/tailwind": "^0.2.5",
+    "astro": "^1.0.0-rc.3"
+  }
+}
