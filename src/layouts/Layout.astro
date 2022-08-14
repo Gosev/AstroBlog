@@ -1,14 +1,19 @@
 ---
   import "~/styles/base.css"
+  import 'wowjs/css/libs/animate.css'
 
   import Header from "~/components/astro/headers/BasicHeader.astro"
   import Footer from "~/components/astro/footers/BasicFooter.astro";
 
   const { title = "", description = "", withHeader = true } = Astro.props;
+
+  import i18next, { t } from "i18next";
+ 
+
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang={i18next.language}>
 
 <head>
   <meta charset="UTF-8">
@@ -74,4 +79,15 @@
     document.getElementById("menu").classList.toggle("hidden");
   }
   window.toggleMenu = toggleMenu
+
+  
 </script>
+
+<script client:load src="js/wow.min.js">
+</script>
+<script client:load >
+  if (typeof window !== "undefined") {
+    new WOW().init();
+  }
+</script>
+

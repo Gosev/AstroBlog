@@ -1,26 +1,26 @@
 ---
   const { } = Astro.props;
+  import i18next, { t } from "i18next";
 ---
 
 <section>
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="pt-32 pb-12 md:pt-40 md:pb-20">
       <div class="text-center pb-12 md:pb-16">
+        <p class="text-base text-blue-500 font-semibold tracking-wide uppercase">
+          {t('code_is_fun')}
+        </p>
         <h1 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4  ">
-          Your website with
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500">Astro</span> +
-          <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500">Tailwind</span>
+          Learn code with
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-pink-500">Kodaps</span> 
         </h1>
         <div class="max-w-3xl mx-auto">
           <p class="text-xl text-gray-600 mb-8 dark:text-slate-400">
-            Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            {t('home.code_is_a_game_our_mission')}
           </p>
           <div class="max-w-xs max-w-none flex justify-center  ">
             <div>
-              <a class="btn text-white bg-blue-600 hover:bg-blue-700 mb-4 sm:mb-0" href="#0">Get
-                started</a>
+              <a class="btn text-white bg-blue-600 hover:bg-blue-700 mb-4 sm:mb-0" href="#0">Resources</a>
             </div>
             <div>
               <a class="btn text-white bg-gray-900 hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 ml-4"
@@ -32,7 +32,7 @@
       <div>
         <div class="relative flex justify-center mb-8  ">
           <div class="flex flex-col justify-center">
-            <img class="mx-auto rounded-md" src="/images/hero-astro.jpg" width="768" height="432" alt="Hero">
+            <img class="mx-auto rounded-md" src="/images/rocket.jpg" width="768" height="432" alt="Hero">
           </div>
         </div>
       </div>

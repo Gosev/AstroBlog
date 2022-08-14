@@ -1,0 +1,34 @@
+---
+interface YoutubeProps {
+  embedId: string;
+}
+const { embedId } = Astro.props;
+---
+<style>
+.ytContainer {
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+  height: 0;
+}
+.iframeContainer {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+</style>
+
+
+<div class="ytContainer">
+  <iframe class="iframeContainer"
+    width="853"
+    height="480"
+    src={`https://www.youtube.com/embed/${embedId}`}
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+    title="Embedded youtube"
+  />
+</div>

@@ -1,0 +1,22 @@
+---
+// An example interface based on the YAML frontmatter I use in my markdown files.
+// Your content might be different.
+interface MarkdownFrontmatter {
+    url: string;
+    publishDate: Date;
+    workInProgress: boolean;
+};
+// Again, your file system hierarchy might be different but
+// relative to this file my markdown files are at this path.
+const allArticles = await Astro.glob<MarkdownFrontmatter>('../../../../pages/posts/**/*.mdx');
+// Filter out articles I don't want to be considered the "latest".
+// Sort by latest and take the first.
+const latestArticle = allArticles
+    .sort((a, b) => new Date(b.publishDate).valueOf() - new Date(a.publishDate).valueOf())
+    .filter(a => !a.workInProgress)
+    [0];
+const articleUrl = `${ Astro.site.origin }${ latestArticle?.url || '/articles' }`;
+---
+<head>
+    <meta http-equiv="refresh" content={ `0; url=${ articleUrl }` } />
+</head>

@@ -1,0 +1,38 @@
+---
+import ArticleCard from "./ArticleCard.astro";
+const { length } = Astro.props;
+
+const allposts = await Astro.glob('../../../pages/blog/*.mdx'); // returns an array of posts that live at ./src/pages/post/*.md
+const sortedposts = allposts
+      .filter(item => !!item.frontmatter?.img)
+      .sort((a,b) => a.frontmatter.date > b.frontmatter.date ? -1 : 1)
+      ;
+
+const posts = sortedposts.slice(0, length || sortedposts.length)
+
+---
+<section class="relative">
+  <div class="absolute inset-0 bg-blue-50 dark:bg-slate-800 pointer-events-none mb-32" aria-hidden="true"></div>
+  <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="py-4 pt-8 sm:py-6 lg:py-8 lg:pt-12">
+      <div class="mb-8 text-center">
+        <p class="text-base text-blue-500 font-semibold tracking-wide uppercase">
+          Latest Articles
+        </p>
+        <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4">
+          Le Blog
+        </h2>
+        <p class="max-w-3xl mx-auto text-center text-xl text-gray-600 dark:text-slate-400">
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+          dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.
+        </p>
+      </div>
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start my-12 dark:text-white">
+        {posts.filter(item => !!item.frontmatter?.img).map(item => <ArticleCard frontmatter={item.frontmatter} >
+       {item.frontmatter. title}
+        </ArticleCard>)}
+      </div>
+
+    </div>
+  </div>
+</section>
