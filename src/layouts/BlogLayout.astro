@@ -33,13 +33,13 @@
 
 <body class="antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-900">
 <Header />
-<main>
-  <article class="prose dark:prose-invert lg:prose-xl mx-auto p-5 mt-12">
-    <h1>{frontmatter.title}</h1>
-       <img src={frontmatter.img} />
-    <slot />
-  </article>
-</main>
+  <main id="swup">
+    <article class="prose dark:prose-invert lg:prose-xl mx-auto p-5 mt-12">
+      <h1>{frontmatter.title}</h1>
+      <img src={frontmatter.img} />
+      <slot />
+    </article>
+  </main>
 <Footer />
 </body>
 

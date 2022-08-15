@@ -1,0 +1,29 @@
+---
+import { getPosts, getSlug, Post } from "~/shared/blogposts";
+import Layout from '~/layouts/Layout.astro';
+
+
+export async function getStaticPaths() {
+
+  const allposts = await Astro.glob<Post>('../../posts/en/*.mdx'); // returns an array of posts that live at ./src/pages/post/*.md
+
+  let posts = getPosts(allposts, 'en');
+  return posts.map(post => {
+    return {
+      params: {slug: getSlug(post)},
+      props: { post }
+  }});
+}
+
+const { default: Content, frontmatter, compiledContent } = Astro.props.post;
+
+
+---
+
+<Layout title="AstroWind — Your website with Astro + Tailwind CSS">
+  <article class="prose dark:prose-invert lg:prose-xl mx-auto p-5 mt-12">
+    <h1>{frontmatter.title}</h1>
+    <img src={frontmatter.img} />
+    <Content />
+  </article>
+</Layout>

@@ -1,14 +1,17 @@
 ---
 import ArticleCard from "./ArticleCard.astro";
+import { getPosts, getFullPath, Post} from "~/shared/blogposts";
+
 const { length } = Astro.props;
 
-const allposts = await Astro.glob('../../../pages/blog/*.mdx'); // returns an array of posts that live at ./src/pages/post/*.md
-const sortedposts = allposts
-      .filter(item => !!item.frontmatter?.img)
-      .sort((a,b) => a.frontmatter.date > b.frontmatter.date ? -1 : 1)
-      ;
+import i18next, { t } from "i18next";
+ 
+// get locale 
+let locale = i18next.language;
 
-const posts = sortedposts.slice(0, length || sortedposts.length)
+const allposts = await Astro.glob<Post>('../../../content/posts/**/*.mdx'); // returns an array of posts that live at ./src/pages/post/*.md
+const posts = getPosts(allposts, locale, length);
+
 
 ---
 <section class="relative">
@@ -17,22 +20,23 @@ const posts = sortedposts.slice(0, length || sortedposts.length)
     <div class="py-4 pt-8 sm:py-6 lg:py-8 lg:pt-12">
       <div class="mb-8 text-center">
         <p class="text-base text-blue-500 font-semibold tracking-wide uppercase">
-          Latest Articles
+          {t('blog.overtitle')}
         </p>
         <h2 class="text-4xl md:text-5xl font-bold leading-tighter tracking-tighter mb-4">
           Le Blog
         </h2>
         <p class="max-w-3xl mx-auto text-center text-xl text-gray-600 dark:text-slate-400">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.
+        {t('blog.subtitle')}
         </p>
       </div>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 items-start my-12 dark:text-white">
-        {posts.filter(item => !!item.frontmatter?.img).map(item => <ArticleCard frontmatter={item.frontmatter} >
-       {item.frontmatter. title}
-        </ArticleCard>)}
+        {posts
+          .filter(item => !!item.frontmatter?.img)
+          .map(item => <ArticleCard frontmatter={item.frontmatter} url={getFullPath(item)} >
+              {item.frontmatter.title}
+            </ArticleCard>)
+        }
       </div>
-
     </div>
   </div>
 </section>

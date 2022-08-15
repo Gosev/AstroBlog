@@ -8,8 +8,11 @@
   const { title = "", description = "", withHeader = true } = Astro.props;
 
   import i18next, { t } from "i18next";
+  import { detectLocaleFromPath } from "~/shared/locutils";
  
-
+  const pathname = Astro.url.pathname;
+  const locale = detectLocaleFromPath(pathname);
+  i18next.changeLanguage(locale);
 ---
 
 <!DOCTYPE html>
@@ -28,7 +31,7 @@
 
 <body class="antialiased text-gray-900 dark:text-slate-300 tracking-tight bg-white dark:bg-slate-900">
   <Header />
-  <slot />
+    <slot />
   <Footer />
 </body>
 
@@ -83,11 +86,12 @@
   
 </script>
 
-<script client:load src="js/wow.min.js">
+<script client:load src="/js/wow.min.js">
 </script>
 <script client:load >
   if (typeof window !== "undefined") {
     new WOW().init();
   }
 </script>
+<script type="module" src="/app.js"></script>
 

@@ -8,7 +8,7 @@ interface MarkdownFrontmatter {
 };
 // Again, your file system hierarchy might be different but
 // relative to this file my markdown files are at this path.
-const allArticles = await Astro.glob<MarkdownFrontmatter>('../../../../pages/posts/**/*.mdx');
+const allArticles = await Astro.glob<MarkdownFrontmatter>('../../blog/**/*.mdx');
 // Filter out articles I don't want to be considered the "latest".
 // Sort by latest and take the first.
 const latestArticle = allArticles

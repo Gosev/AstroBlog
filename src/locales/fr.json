@@ -1,6 +1,20 @@
 {
     "code_is_fun": "Le code est un jeu!",
     "home": {
-        "code_is_a_game_our_mission": "Le code est un jeu... un jeu d'exploration, de construction, de logique. Notre but : aider à comprendre comment le code peut être amusant."
-    }
+        "code_is_a_game_our_mission": "Le code est un jeu... un jeu d'exploration, de construction, de logique. Notre but : aider à découvrir comment le code peut être amusant."
+    },
+    "menu": {
+        "home": "Accueil",
+        "about": "A propos",
+        "blog": "Blog",
+        "resources": "Ressources"
+    },
+    "blog": {
+        "subtitle": "Découvrez les dernières actualités, articles et vidéos !",
+        "overtitle": "Derniers articles"
+    },
+    "hero": {
+        "tagline": "Apprendre le code avec "
+    },
+    "read": "Lire"
 }

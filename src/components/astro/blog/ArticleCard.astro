@@ -1,13 +1,26 @@
 ---
 
-const { frontmatter } = Astro.props;
+const { frontmatter, url } = Astro.props;
 import { Image } from '@astrojs/image/components';
 import { getImage } from '@astrojs/image';
 import BasicCTA from '../ctas/BasicCTA.astro';
+function go() {
+    location.href = url;
+  }
+
+
+  import i18next, { t } from "i18next";
 
 ---
+<script is:inline >
+  function goOnClick(elt) {
+    console.log(elt);
+    console.log(elt.dataset.url)
+    location.href = elt.dataset.url;
+  }
+</script>
 
-<div data-wow-delay="0.3s" class="relative flex flex-col p-6 wow fadeInUp  bg-white dark:bg-slate-900 rounded shadow-xl dark:border dark:border-slate-800">
+<div onclick="goOnClick(this)" data-url={url} data-wow-delay="0.3s" class="relative flex flex-col p-6 wow fadeInUp  bg-white dark:bg-slate-900 rounded shadow-xl dark:border dark:border-slate-800">
   <div class="w-full items-center mb-4">
     <div class="w-full ml-4 text-xl font-bold">
       {frontmatter.title}
@@ -26,7 +39,7 @@ import BasicCTA from '../ctas/BasicCTA.astro';
   <div class="w-full ml-4 flex flex-row-reverse pr-4">
 
   <a class="btn text-white bg-gray-900 hover:bg-gray-800 dark:bg-gray-800 dark:hover:bg-gray-700 ml-4"
-    href="#0">Read
+    href={url}>{t('read')}
     </a>
     
   </div>
