@@ -5,7 +5,7 @@ import Layout from '~/layouts/Layout.astro';
 
 export async function getStaticPaths(locale: string) {
 
-  const allposts = await Astro.glob<Post>('../../../posts/fr/*.mdx'); // returns an array of posts that live at ./src/pages/post/*.md
+  const allposts = await Astro.glob<Post>('../../../content/posts/fr/*.mdx'); // returns an array of posts that live at ./src/pages/post/*.md
 
   let posts = getPosts(allposts, 'fr');
 

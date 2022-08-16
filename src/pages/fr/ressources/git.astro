@@ -1,0 +1,23 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import BasicCTA from '~/components/astro/ctas/BasicCTA.astro';
+// import BasicFeatures from '~/components/astro/features/BasicFeatures.astro';
+import StepsFeatures from '~/components/astro/features/StepsFeatures.astro';
+import GenericHeroWithImage from '~/components/astro/hero/GenericHeroWithImage.astro';
+import ArticleList from '~/components/astro/blog/ArticleList.astro';
+import Gumroad from '~/components/ressource/gumroad.astro';
+
+---
+
+<Layout title="Premiers pas avec Git & GitHub">
+<main id="swup">
+  <GenericHeroWithImage 
+    tagline="Prenez Git en main" 
+    image="/images/products/git.jpg" 
+    text="Dans ce livret, nous voyons le <strong>cheminement pas à pas</strong> qu’utilisent des développeurs pour travailler avec <strong>l’outil incontournable qu’est git</strong>. En partant de la base (l’installation et l’initialisation), nous allons construire ensemble un dépôt git. Et voir pas à pas chacune des étapes nécessaires à la maitrise de Git."
+    />
+  <StepsFeatures />
+  <BasicCTA />
+  <Gumroad slug="premiers-pas-avec-git-et-github" />
+</main>
+</Layout>

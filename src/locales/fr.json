@@ -16,5 +16,9 @@
     "hero": {
         "tagline": "Apprendre le code avec "
     },
-    "read": "Lire"
+    "read": "Lire",
+    "link": {
+        "youtube": "https://www.youtube.com/channel/UCzdX32OIhpfrdxQRhN2s98w",
+        "facebook": "https://www.facebook.com/KodapsFR"
+    }
 }

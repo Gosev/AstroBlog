@@ -1,0 +1,33 @@
+---
+  const { tagline, image, text  } = Astro.props;
+  import { t } from "i18next";
+---
+
+<section>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="pt-32 pb-12 md:pt-40 md:pb-20">
+      <div class="text-center pb-12 md:pb-16">
+        <p class="text-base text-blue-500 font-semibold tracking-wide uppercase">
+          {t('code_is_fun')}
+        </p>
+        <h1 class="text-5xl md:text-6xl font-bold leading-tighter tracking-tighter mb-4  ">
+        {tagline}
+        </h1>
+        <div class="max-w-3xl mx-auto">
+          <p class="text-xl text-gray-600 mb-8 dark:text-slate-400" set:html={text}>
+          </p>
+          <div class="max-w-xs max-w-none flex justify-center  ">
+
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="relative flex justify-center mb-8  ">
+          <div class="flex flex-col justify-center">
+            <img class="mx-auto rounded-md" src={image} width="768" height="432" alt="Hero">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
