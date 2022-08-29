@@ -1,0 +1,164 @@
+---
+title: Pourquoi utiliser Astro ?
+img: /images/blog/astro.jpg
+date: "2022-08-25"
+---
+
+C’est quoi Astro, pourquoi l’utiliser ?
+
+Et par là, je veux dire plusieurs choses : à quoi sert Astro ? Dans quels cas l’utiliser ou pas ? Quel est le problème que Astro tente de résoudre ? 
+
+En d'autres termes : quelle est la "raison d'être" d’Astro ?
+
+Pour faire des recherches sur Astro et de comprendre son fonctionnement, j'ai réécrit mon site personnel, à kodaps.dev/fr, en utilisant Astro et un des templates qu’ils fournissent. 
+
+Maintenant, revenons à nos moutons: C’est quoi Astro ?
+
+C’est peut-être plus facile de commencer par définir ce qu'Astro n'est pas.
+
+Astro est un framework JavaScript... mais j'hésite à l'appeler comme ça. Pourquoi ? Parce que les gens supposent immédiatement qu’on parle d’un framework frontend destiné à concurrencer React, Svelte, Solid etc. 
+
+Astro adresse un autre besoin. Il fonctionne avec les frameworks frontend, en collaboration et non en concurrence avec eux.
+
+Astro ne vise pas non plus à concurrencer NextJS ou Remix, bien que ces deux-là abordent des cas d’usage similaires.
+
+Et en réalité: ça fait du bien d'entendre les créateurs d’Astro déclarer que, non, ils ne veulent pas répondre à tous les besoins. Et non, il y a des situations où Astro n'est pas idéal pour le travail à accomplir.
+
+Parce qu'Astro est ... un outil. Un outil qui cible un cas d’usage particulier : les sites Web focalisés sur le contenu.
+
+Qu'est-ce que cela signifie ? Eh bien, pour le comprendre, nous allons passer Astro en revue, en examinant ses forces, ses faiblesses, ses caractéristiques, et notamment: 
+* Le modèle de rendu de page (à l’ancienne !) d'Astro (et le cas d’usage ciblé par Astro)
+* L'expérience de développement (ou DX) d'Astro
+* La notion de complexité optionnelle
+* Comment Astro s'y prend pour créer des pages qui se chargent rapidement
+* Le modèle des "îlots d'interactivité”
+
+Mais d'abord, examinons le modèle de rendu.
+
+# SPA vs MPA ?
+
+React, et d'autres frameworks frontend, confient le rendu HTML au navigateur. Ca permet une expérience utilisateur plus riche puisque l'état est géré localement, sur le client. 
+
+Mais ça comporte un coût. 
+
+Cette interactivité est au prix d'un JavaScript plus lourd expédié au client.
+
+Mais qu'en est-il de toutes les pages Web où il y a peu ou pas d'état ? Tous les blogs, les pages marketing, les sites d'actus, etc. qui constituent une grande majorité du Web ? Les pages axées sur le contenu, et non sur l'interactivité ?
+
+C’est ça le cas d’usage qu'Astro vise à servir.
+Les objectifs d'Astro sont à l'opposé de ceux de React. Astro se définit comme une "application multi-pages" (ou “MPA”, en anglais), par opposition aux « Single Page Applications » des frameworks front-end. Pour tout développeur back-end, cela ressemble à s’y méprendre à ce que font Laravel en PHP ou Ruby on Rails.
+
+Et c'est très exactement ce qu'Astro vise à faire. 
+
+Quand Astro a été annoncé, les commentaires portaient sur le fait que la génération de pages sur le serveur ressemblait à un retour vers la façon de faire du PHP, vers le rendu coté serveur. Fred Schott, de l'équipe Astro, a répondu :
+> "Exactement ! C'était un bon modèle dont nous nous sommes éloignés parce que l'expérience du développeur était si pauvre !"
+
+Et là où PHP ou Ruby on Rails ou même Python vous obligent à maîtriser un autre langage. Astro utilise JavaScript, dont vous avez de toute façon besoin pour le développement front-end.
+
+Dans un sens, Astro est un serveur fait pour les développeurs front-end.
+
+# Pourquoi pas du HTML classique ?
+
+Parce que le HTML n’est pas un langage de programmation, mais juste de mise en forme.
+
+Astro apporte au HTML la réutilisation du code (via les composants), la logique et une syntaxe de type JSX. 
+
+(Petit détail: vous n'ayez pas besoin d’utiliser l'attribut "classNames" de React). 
+
+Nous pouvons utiliser des variables, des conditions et des map sur des array pour ajouter de la logique à HTML.
+
+En bref : Astro apporte à la création du code HTML une expérience de développeur aussi agréable que celle de NextJS.
+
+Mais ce n’est pas tant une logique client qu’Astro apporte à la création de pages web.
+
+Les fichiers Astro (c'est-à-dire: les pages et les composants) comportent deux parties. 
+
+La première, en haut, est le code côté serveur (entre deux lignes de trois tirets, comme le “frontmatter” de Markdown), c’est-à-dire, la logique. 
+
+Vient ensuite le code HTML. La vue, en fait. 
+
+Cela permet par exemple aux pages et aux composants Astro de lire des fichiers sur le serveur, ou d'aller chercher des données sur un autre service (comme un CMS headless) pour créer la page.
+
+Astro prend également en charge Markdown et MDX. Cela signifie que les utilisateurs peuvent créer du contenu dans un format convivial pour les non geeks, par exemple les rédacteurs de contenu.
+
+Alors : Pourquoi ne pas utiliser simplement NextJS, qui est un peu la référence du moment pour la création de pages.
+
+À première vue, Remix et NextJS ont le même objectif qu'Astro. Mais Astro supprime (par défaut) toute la complexité du front-end, celle liée à la gestion d’état. 
+
+Pourquoi ? Parce qu'Astro ne se soucie pas (par défaut) de l'état du client. 
+
+Le cas d’usage par défaut d'Astro est la génération de sites statiques (SSG). Tout rendu côté serveur (SSR) est facultatif. 
+
+Choisir entre les deux est une question de déploiement : déployons-nous vers un environnement statique ou vers un environnement calculé ?
+
+Cela signifie que l'état, qu'il soit côté client ou côté serveur, est une option, pas un prérequis. Astro se débarrasse de tout le JavaScript côté client… sauf indication contraire. 
+
+Cela signifie que les pages qu'il produit sont légères et se chargent rapidement.
+
+Alors j’en entends dire : Moi j’adore React ou Svelte ou Solid ou Vue…
+
+Et moi aussi je les apprécie (sinon je ferais pas une chaine qui en parle).
+
+Mais surtout, Astro les aime bien aussi.
+
+Vous pouvez intégrer des composants venant de de ces frameworks dans une page ou un composant Astro. Il suffit de faire un import.
+
+Mais ce qui se passe ici est fascinant : par défaut, Astro n'envoie aucun JavaScript au navigateur. 
+
+Les composants eux-mêmes ne sont pas interactifs. 
+
+Parce que Astro effectue le rendu de l'arbre des composants (côté serveur) et publie le HTML qui en résulte.
+
+Il existe un nombre croissant de CMS, d’outil de gestion de contenu, basés sur React. 
+
+Astro enlève le poids superflu ,et produit des landing page qui se chargent en un clin d'œil, faisant de ces CMS des solutions viables pour la création de landing page, des page de marketing ou de présentation. 
+
+Et si j'ai besoin d'interactivité... ?
+
+Et bien Astro permet d’activer l'interactivité côté client, composant par composant.
+
+Comme je l'ai mentionné, le comportement par défaut est l'absence d'interactivité. 
+
+Mais si vous le souhaitez ou si vous en avez besoin, vous pouvez opter pour l'interactivité côté client. Astro enverra alors le JavaScript correspondant au client.
+
+Vous pouvez spécifier à quel moment vous souhaitez que le composant devienne interactif (ou "s'hydrate"). 
+
+Pour ce faire, Astro fournit un ensemble de directives. Si vous voulez que le composant soit interactif au moment du chargement de la page, ajoutez la directive client:load au composant. 
+
+Pour que le composant se charge dès que la page est inactive, utilisez la directive client:idle. Et si vous voulez attendre que le composant soit visible, utilisez (vous l'avez deviné) client:visible.
+
+On obtient comme ça le meilleur des deux mondes : un chargement rapide et optimisé en fonction de votre cas d’usage.
+
+En ce sens, Astro permet à React de fonctionner encore mieux.
+
+Mais c'est un autre framework ??
+
+A-t-on vraiment besoin d’un nouveau framework ?
+
+De tous les frameworks que j'ai pu utiliser au cours des dernières années, Astro est celui dont la courbe d'apprentissage est la plus douce. 
+
+Celui qui donne le moins l'impression d'être "un autre framework à apprendre". 
+
+Et pour moi, c'est là son meilleur argument de vente : le peu de chose qu'il y a à apprendre.
+
+Le HTML est du HTML classique auquel on a ajouté un peu de logique et de composants.
+
+Le code backend est du JS simple.
+
+Et c'est logique, car l'essentiel de l'innovation dans Svelte, React ou Solid concerne la gestion de l'état. 
+
+Supprimez l'état et tout devient beaucoup plus simple. 
+
+Bien sûr, il existe des moyens de partager l'état entre les composants de différentes arborescences (et même de différents frameworks !). 
+
+Vous pouvez soit utiliser une solution intégrée appelée atoms, soit vous appuyer sur Svelte ou Solid.
+
+Mais cette complexité est facultative, en fonction de votre cas d'utilisation.
+
+Cela fait d'Astro une plateforme parfaite pour les personnes souhaitant créer des pages simples. Ou pour ceux qui apprennent le HTML, le JavaScript ou même les frameworks frontend.
+
+Astro n'est pas (encore ?) adapté à tous les cas d'utilisation. Et c'est très bien ainsi.
+
+Mais il est étonnant de constater le nombre de cas d'utilisation qu'il couvre, et à quel point l'expérience du développeur est agréable.
+
+Et pour ma part, je vais passer plus de temps à explorer ce nouveau... framework ? outil ? serveur ?

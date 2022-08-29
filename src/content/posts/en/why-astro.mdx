@@ -1,0 +1,145 @@
+---
+title: Why Astro ?
+img: /images/blog/astro.jpg
+date: "2022-08-25"
+---
+Why You Should Consider Using Astro For Your Next Project
+
+What is Astro? And by that, I mean several things: what is Astro for? When is it a good idea to use Astro? And when is it not? What problem is it trying to solve? In other words: what is Astro's why… its "raison d'être" as the French would say?
+
+Before we go any further, in order to research Astro and understand how it works, I actually rewrote my personal website with it, at kodaps.dev, using one of the templates Astro provides.
+
+Now, what is Astro ?
+
+It might be easier to start by defining what Astro is not.
+
+Astro is a JavaScript framework… but I hesitate to call it that. Why? Because people immediately assume that means a frontend framework. One intended as an alternative to React and the like.
+
+Astro is something else. It works with frontend frameworks, in collaboration not in competition with them.
+
+It does not aim to compete with Next.js or Remix either, although those two do address similar use cases.
+
+It's refreshing to hear Astro’s creators state that, no, they don't want to address every single need. And no, there are situations where Astro is not ideal for the job at hand.
+
+Because Astro is … a tool. A tool that targets a particular use case: publishing content-focused websites.
+
+What does that mean? Well, to understand that we'll be going over Astro's features, its strengths, and its weaknesses, such as:
+- Astro's old-school page rendering model (and what use cases Astro targets)
+- Astro's developer experience or DX
+- Astro's "complexity you can opt-in to"
+- How Astro goes about creating pages that load fast
+- And the "islands of interactivity" model
+
+But first, let's look at the rendering model.
+
+React, and other frontend frameworks, entrust HTML rendering to the browser. This allows for a richer user experience because the state is managed locally, on the client. 
+
+But this comes at the cost of more JavaScript shipped to the client.
+
+But what about all the web pages where there is no state to speak of? All the blogs, landing pages, news websites, and so on that make up a large majority of the web? The pages focused on content, not interactivity?
+
+Those are the use cases that Astro aims to serve.
+
+Astro's goals are the opposites of React's. Astro defines itself as a "Multi Page Application" or “MPA”. To any server developer, that sounds like reinventing PHP's Laravel or Ruby on Rails.
+
+And that is precisely what Astro aims to do. When Astro was announced, people commented that generating pages on the server felt outdated and old-school. Fred Schott, of the Astro team, responded:
+
+"Exactly! That was a good model that we moved away from because the developer experience was so poor!"
+
+PHP or Ruby on Rails or even Python all require you to master another language. Whereas Astro uses JavaScript which you need for frontend development anyway.
+
+So in a sense, Astro is a server for frontend developers.
+
+But why not just use vanilla HTML? 
+
+Well, HTML is for markup, not programming.
+
+Astro upgrades HTML with reusability (via components), logic, and a JSX-type syntax. (Although you don't need to use React's "classNames" attribute.)
+
+ We can use variables, conditions, and maps on arrays to add logic to HTML.
+
+In short: Astro brings a Next.js-like developer experience to HTML authoring.
+
+It doesn't primarily provide client-side logic to HTML authoring, however.
+
+Astro files (i.e. pages and components) have two parts. 
+
+First is the server-side code (between two lines of three hyphens, like frontmatter on Markdown). 
+
+Then comes the front-end HTML code. 
+
+This allows Astro pages and components to read from files on the server, or to fetch data from a backend (such as a headless CMS) to create the page.
+
+Astro also supports Markdown and MDX. This means users can author content in a "copywriter-friendly" format.
+
+At first glance, Remix and Next.js serve the same purpose as Astro. But Astro removes all of the frontend complexity by default. 
+
+Why? Because it does not care by default about the client state. Astro's default behavior is Static Site Generation (SSG). Any Server Side Rendering (SSR) is optional. 
+
+Choosing between the two is done when configuring the deployment: are we deploying to a static environment or a computed one?
+
+This means that state, be it client-side or server-side, is an option, not a prerequisite. 
+
+Astro does away with all the client-side JavaScript unless instructed otherwise. This means the pages it produces are light and load fast.
+
+I can already imagine people saying : But I like React/Svelte/Solid / Vue…!
+
+And so do I. Otherwise I wouldn’t run a channel that talks so much about them. 
+
+But more to the point so does Astro.
+
+You can plug components from these frameworks into an Astro page or component. All it takes is an import statement
+
+But what happens here is fascinating: by *default* Astro ships no JavaScript to the browser. None. Zero. Zilch.
+
+The components themselves are not interactive. Astro renders the component tree (server-side) and publishes the resulting HTML.
+
+There is a growing number of React-based CMSs. As Astro strips out the excess weight and produces landing pages that load in a snap, these CMSs become viable solutions for landing page creation. 
+
+But what if I need interactivity…!
+
+Astro allows you to opt-in to client-side interactivity, on a component-by-component basis.
+
+As I mentioned, the default behaviour is no interactivity. But if you wish or need to, you can opt-in to client-side interactivity. Astro will then ship the relevant JavaScript to the client.
+
+In fact, you can specify when you want the component to become interactive (or to "hydrate"). 
+
+To do so, Astro provides a set of directives. 
+
+If you want the component to be interactive as the page loads, add the client:load directive to the component. 
+
+For the component to load whenever the page is idle use client:idle. 
+
+And if you want to wait for the component to be visible, use (you've guessed it) client:visible.
+
+You get the best of both worlds, with page load optimized based 
+on your use case.
+
+In that sense, Astro makes React work even better.
+
+But it's another framework…
+
+Of all the frameworks that I've been able to use over the last years, Astro is the one with the softest learning curve. The one that feels the least like "another framework to learn". 
+
+And to me, that is its strongest selling point: how little there is to learn.
+
+The HTML is vanilla HTML with a bit of logic and reusability added.
+The server code is basic server-side JS.
+
+And that makes sense, because the meat of the innovation in Svelte, React, or Solid or Vue is about how to manage the state. 
+
+Do away with the state and everything becomes much simpler. 
+
+Of course, there are ways to share the state between components in different trees (and even from different frameworks!). 
+
+You can either use a baked-in solution called atoms, or rely on Svelte or Solid.
+
+But that complexity is optional, depending on your use case.
+
+This makes Astro a perfect platform for people wanting to create simple pages. 
+Or people learning HTML, JavaScript, or even frontend frameworks.
+Astro is not (yet?) suited for every single use case. And that's fine.
+
+But it's astonishing how many use cases it does cover, and how agreeable the developer experience is.
+
+And I, for one, am going to be spending more time exploring this new… framework? tool? server?

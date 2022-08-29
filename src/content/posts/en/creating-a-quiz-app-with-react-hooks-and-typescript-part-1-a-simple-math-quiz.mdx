@@ -1,0 +1,222 @@
+---
+title: Creating a quiz app with React hooks and Typescript
+img: /images/blog/1_6VNq4rMMyDwzr-N-hgf7ow.jpeg
+credits: Photo by <a href="https://unsplash.com/@alisestorsul?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">alise storsul</a> on <a href="https://unsplash.com/s/photos/pinky-swear?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+video: WvAnDY2dfXc
+date: "2021-09-19"
+subtitle: Part 1 - a simple math quiz
+enabled: true
+---
+
+The goal of this series is to show how to create a full-fledged quiz app in React. First, we are going to set up a **simple maths app** and look at how useReducer allows us to manage our state. We’ll be using NextJS (because of its wonderful [DX](https://css-tricks.com/what-is-developer-experience-dx/))
+
+## Our requirements — how should it work?
+
+First: how do we want our quiz to work? Well in this example we will be creating a simple math quiz that tests users’ proficiency in basic calculus. Why maths? Because it is easy to generate questions and right and wrong answers automatically, which means we don’t need to rely on an external source of truth. (That’s for later: we’ll be keeping things as simple as possible for now, with a view to extending the principle to other types of quizzes.)
+
+We will generate 10 questions of increasing difficulty, and each question will provide the user with 4 alternatives, only one of which will be the right answer. So far so good.
+
+To generate the questions, we’ll be choosing two numbers randomly between 1 and 10. The user will have initially selected an arithmetic operation (addition, multiplication, subtraction, or division) for the quiz.
+
+Once we have the two numbers and end result, we’ll be also randomly selecting nearby numbers to provide alternative (incorrect) answers.
+
+## What state of which type shall we be using?
+
+The state of the quiz will thus be represented by :
+
+*   The 10 questions, which each have a text, a list of choices, and a right answer
+*   The current stage (an integer)
+*   The list of answers given (an array of up to 10 answers). We could actually deduce the current question from the length of this if we wanted to, but separating the two allows us to browse past answers.
+
+So in terms of type definitions for the state, we end up with something like this :
+
+```js
+interface Choice {  
+  value: string;  
+}interface Question {  
+  text: string;  
+  choices: Array<Choice\>;  
+  answer: string;  
+}interface QuizzState {  
+  step: number;  
+  questions: Array<Question>;  
+  answers: Array<string>;  
+}
+```
+
+## What hooks will we be using?
+
+We could just have [useState](https://reactjs.org/docs/hooks-reference.html#usestate) for each of these, and it would work, but it might end up being unwieldy and require [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) to manage interactions between the different state components (the operation and the randomly selected numbers impact the answers, changing stage resets the question, etc.)
+
+A much better solution would be to use a reducer (i.e. [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer)) to manage the state and drive game logic.
+
+### What is a “reducer” and how does it work?
+
+A reducer is a **pure** function that takes a (current) **state** and action and returns a new state: reducer(state, action) => state
+
+### Pure functions
+
+Now, what does “_pure_” mean? It basically means that for any given input, the function will always return the **same** value, and do **nothing else** i.e. will not have any side effects. You could imagine it as being a lookup table. This easily allows features like moving back and forwards within the sequence of states.
+
+This means for example that we can’t _randomly_ generate the questions within the reducer. But we _can_ set up the questions as an **initial state** of the quiz.
+
+It also means that the reducer **cannot** **modify the input** parameters. Let’s say this is my state object :
+
+```js
+let state0 = {count : 0};
+```
+
+Let’s say my reducer does something like this:
+
+```js
+function update(state) {  
+  state.count++;
+  return state;
+}
+```
+
+In this case, we’re not only outputting a new state, but we’re also _changing_ the current one, due to the fact that objects and arrays are passed **by reference** into functions:
+
+```js
+let state1 = update(state0);  
+console.log('count = ', state0.count); // count = 1
+```
+
+In this case where the state only has one field (which means **useState** would have been a better solution!) the proper way to do this would be to return a new object with the new value :
+
+```js
+function update(state) {  
+  const count = state.count + 1;  
+  return {count}; // this is syntaxic sugar for {count:count}  
+}
+```
+
+With a more realistic state that has more than one field, the function would use the **spread operator** to assign all fields except for the updated one:
+
+```js
+interface State {count:number, other\_field: any};function update(state:State) {
+  const count = state.count + 1;
+  // returns: { other\_field: state.other\_field, count: count}
+  return {...state, count};
+}
+```
+
+### Our quiz actions
+
+What actions will we be using? Well, for starters, a **set_state** action that will set the state to the (randomly generated) initial state. We’ll also need an **answer** action that will save the answer and move the quiz to the text answer. That will probably do for now. Our basic action type will be an object with an action field and a payload (here in our example either the initial state or the answer), which we could define as such :
+
+```
+interface Action { type: string, payload: any };
+```
+
+However, Typescript allows us to have a little more precision (and fun) than that, we can define a union type which allows us to have the payload type depend on the value of the action type :
+
+```js
+  type QuizzAction =
+    {type: 'set_state', payload: QuizzState} |
+    {type: 'answer', payload: string};
+```
+
+i.e. when the action type is ‘_set_state’_, the payload is of type QuizzState, and when the action type is ‘_answer’_ the payload is a number.
+
+### The reducer implementation
+
+Our reducer ends up looking like this:
+
+```js
+export const quizzReducer =   
+  (state:QuizzState, action:QuizzAction) => {  
+    switch (action.type) {  
+      case 'answer':  
+        const answers = [...state.answers, action.payload];  
+        const step = state.step + 1;  
+        return {...state, answers, step}; 
+      case 'set_state':  
+        return action.payload; 
+      default:  
+        throw** new Error('Unexpected action');  
+    }  
+};
+```
+
+The set_state action is as basic as it gets, however, in the ‘answers’ action, we not only had to deconstruct the _state_ but also the list of answers itself (which is an array).
+
+## Let’s get coding the display components
+
+Now we need to set up a Quiz component (and page, in NextJS) that will show the Question component or the Result component depending on the state of the quiz, i.e. on whether there are 10 answers or not. The quiz component will also pass on the reducer’s state and dispatch functions.
+
+The Question component will have a **title** (i.e. the question itself), **four options**, one of which will be the correct answer, and an indication of the **progress** within the quiz (e.g. 3/10).
+
+The **Result** component will show the user’s **score** and give the player the option to **play again**.
+
+Our Quiz component looks like this :
+
+```js
+const Quizz: React.FC<QuizzProps> = (props) => {
+  let [state, dispatch] = useReducer(quizzReducer, initialQuizzState);
+  useEffect(() => {
+    dispatch({type: 'set_state', payload: newState('+')});
+    }, []);
+  return <> {state.answers.length < 10  
+    ? <Question state={state} dispatch={dispatch}/>  
+    : <Results state={state} dispatch={dispatch} />}  
+  </>;
+  }
+export default Quizz;
+```
+
+Our Result component is very basic :
+
+```
+export const Results: React.FC<ResultsProps> = ({state, dispatch}) => {let score = calculateScore(state.operation, state.questions, state.answers);const tryAgain = () => {  
+  dispatch({type:'set_state', payload: newState('+')});  
+}return <div>  
+  <span> Your score is {score} </span> <br/>  
+  <button onClick={tryAgain} > Try again ? </button>  
+</div>;};
+```
+
+The question component is only slightly more complicated :
+
+```
+export const Question: React.FC<QuestionProps>   
+    = ({state, dispatch}) => {let question = state.questions[state.answers.length];const answer = (itm:Choice) => {   
+  dispatch({type: 'answer', payload:itm.value})  
+}if (!question) { return <></>; }return <div>  
+  <h2> {question.text </h2> <br/>  
+  <ul> {  
+   **question.choices.map**((itm) => <li   
+        onClick={() => answer(itm)}   
+        **key={itm.value}**\>   
+          {itm.value}   
+    </li>)  
+  }</ul>  
+  <Progress   
+   current={state.answers.length}   
+   total = {state.questions.length}  
+  /></div>}
+```
+
+The Progress component is also fairly simple, basically :
+
+```
+export const Progress: React.FC<ProgressProps> =   
+  ({current, total}) => { let pct = Math.floor(100\*current/total) + '%';  
+   return <**div** style={{  
+      width: '100%',   
+      border: 'solid 1px #ccc',  
+      marginTop:'1rem',   
+      height: '1rem',   
+      position: 'relative'}}>  
+      <**div** style={{  
+         width: pct,   
+         border: 'solid 1px #999',   
+         left:0,   
+         top:0,     
+         bottom: 0,   
+         position: 'absolute'}}/>  
+    </div>;  
+}
+```
+
+And _voilà_, we have our (very basic) quizz !

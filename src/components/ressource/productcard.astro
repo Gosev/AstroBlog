@@ -1,0 +1,17 @@
+---
+  const { title, image } = Astro.props
+  import i18next, { t } from "i18next";
+
+---
+
+<div class="w-full flex flex-row bg-white dark:bg-slate-900 rounded shadow-xl dark:border dark:border-slate-800 p-10">
+  <div class="w-full md:w-1/2 ">
+    <img src={image} width="600" height="400" class="w-full"/>
+  </div>
+  <div class="w-full md:w-1/2  text-gray-500 dark:text-gray-400 p-4"> 
+    <h2 class="text-2xl font-bold text-gray-500 dark:text-gray-400">
+      {title}
+    </h2>
+    <a> {t("more_details")}</a>
+  </div>
+</div>

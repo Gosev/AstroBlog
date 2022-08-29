@@ -2,12 +2,10 @@
 
 export const pages = [
   {name: 'blog'},
-  {name: 'resources'},
-  {name: 'about'}
+  {name: 'resources'}
 ]
 
 export const footer = [
   {name: 'blog'},
-  {name: 'resources'},
-  {name: 'about'}
+  {name: 'resources'}
 ]

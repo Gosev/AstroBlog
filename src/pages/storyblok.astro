@@ -1,0 +1,8 @@
+---
+import StoryLayout from '../layouts/StoryLayout.astro'
+import { getStory } from '../shared/storyblok.js'
+
+const story = await getStory('home')
+---
+
+<StoryLayout story={story} />

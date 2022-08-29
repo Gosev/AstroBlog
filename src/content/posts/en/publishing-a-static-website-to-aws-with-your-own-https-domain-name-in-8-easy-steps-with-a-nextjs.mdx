@@ -1,0 +1,93 @@
+---
+title: Publishing a static website to AWS with your own HTTPS domain name
+img: /images/blog/nick-fewings-8bYEFg7gDVs-unsplash.jpg
+credits: Photo by <a href="https://unsplash.com/@alisestorsul?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">alise storsul</a> on <a href="https://unsplash.com/s/photos/pinky-swear?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+video: WvAnDY2dfXc
+date: "2021-09-19"
+subtitle: in 8 easy steps (with a NextJS example)
+enabled: true
+---
+
+[![David Hockley](https://miro.medium.com/fit/c/96/96/0*9l2fuDhh_aMOpOcB.)
+
+](https://gosev.medium.com/?source=post_page-----5ec1e57e8ac8--------------------------------)[David Hockley](https://gosev.medium.com/?source=post_page-----5ec1e57e8ac8--------------------------------)[Follow](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fsubscribe%2Fuser%2Fe68daed69805&operation=register&redirect=https%3A%2F%2Fkodaps.com%2Fpublishing-a-static-website-to-aws-with-your-own-https-domain-name-in-8-easy-steps-with-a-nextjs-5ec1e57e8ac8&user=David+Hockley&userId=e68daed69805&source=post_page-e68daed69805----5ec1e57e8ac8---------------------follow_byline-----------)
+
+Jan 24, 2021
+
+·3 min read
+
+[
+
+Save
+
+](https://medium.com/m/signin?actionUrl=https%3A%2F%2Fmedium.com%2F_%2Fbookmark%2Fp%2F5ec1e57e8ac8&operation=register&redirect=https%3A%2F%2Fkodaps.com%2Fpublishing-a-static-website-to-aws-with-your-own-https-domain-name-in-8-easy-steps-with-a-nextjs-5ec1e57e8ac8&source=--------------------------bookmark_header-----------)
+
+Publishing a static website to AWS with your own HTTPS domain name in 8 easy steps (with a NextJS example)
+==========================================================================================================
+
+If you have a fully static website you can easily host in on S3 and save on hosting fees, but there are a few hoops to jump through. Doing it for a website generated with NextJS requires one or two specific more steps to ensure that dynamic routes work fine.
+
+Step 0: the domain
+==================
+
+If you want to have the website behind your own domain (say [www.domain.com)](http://www.domain.com)), the easiest way is to have the domain registered or a least controlled (via the relevant nameservers) with Route 53, AWS’s DNS service. How to do this depends on where you’ve registered the domain.
+
+## Step 1: Create an S3 bucket named with the URL you want to host at
+
+Go to the S3 service, click on “create bucket” and enter the URL you want to host the website at, as the name of the bucket. This is not absolutely required (i.e. you could put any old name) but it makes things clearer, and also helps if you ever want to move the website somewhere else (i.e. to a different URL) and want to do a redirect, so it’s just safer and saner all round.
+
+You want to make sure you set up the bucket so that it allows you to give public read access to the objects inside.
+
+![](https://miro.medium.com/max/1400/1*WtiJF3uRGO444YhczOxhKQ.jpeg)Hosting in a bucket, old school style. Photo by [Marina Khrapova](https://unsplash.com/@mimiori?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/s3-bucket?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+## Step 2: Create the Cloudfront CDN distribution for the new bucket
+
+The first thing to do is to set the Origin Domain Name to the S3 bucket.
+
+You then need to set index.html as the default Root object.
+
+I would suggest you create the distribution before you set the CNAME to the domain you want to use. (This might be just the fruit of past misadventures, the AWS dev team might have cleaned this up by the team you are reading this).
+
+## Step 3: If you don’t have one, request an SSL certificate (with a wildcard).
+
+It’s easier to directly create a certificate for e.g. \*.domain.com, especially if the domain is hosted with Route 53 because you can use DNS validation and let AWS handle most of the work. The certificate validation can take a bit of time. Once you have the certificate you can then update the distribution with the CNAME and certificate.
+
+## Step 4: Add the domain in the CNAME for the distribution, and add or request a certificate
+
+Now enter a CNAME, activate the use of custom SSL certificates, and select the certificate that has previously been selected.
+
+## Step 5: Create a record in Route 53 with the URL you want, and point it to the CloudFront distribution
+
+Create an A recording, enter the record name you want, activate the Alias option, “Route traffic to a CloudFront distribution” and select the distribution (which should already be filtered based on the CNAME you entered previously).
+
+## Step 5: Build the app and upload the build output to S3
+
+Run:
+
+```
+next export
+```
+
+Then go into the ./out folder and do :
+
+```
+s3 cp . s3://S3\_BUCKET\_NAME/ --recursive --acl=public-read -- profile=PROFILE\_NAME
+```
+
+Where S3\_BUCKET\_NAME is replaced with the S3 bucket name and PROFILE\_NAME with.. your AWS profile name, if you have a specific one(if not, just skip that argument or use “default” as a profile name).
+
+Now test that the landing page works fine; if you don’t have any dynamic routes (e.g. stuff like /blog/{slug}) you’re probably already good to go. If you do have dynamic routes you might want to do the following step so that you can link directly to the content hosted at dynamic routes.
+
+## Step 6: Set the trailing slash to true and copy all the folder/index.html files to folder
+
+Go to the next.config.js file and set the trailingSlash value to true, e.g. :
+
+```
+**const** nextConfig = { trailingSlash: true}
+```
+
+You can then run the following script, taking care to replace S3\_BUCKET and PROFILE env vars with the correct values
+
+## Step 7: Test
+
+You should be good to go, but feel free to get in touch if anything isn’t working :)

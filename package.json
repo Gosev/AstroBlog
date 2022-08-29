@@ -14,15 +14,22 @@
     "@astrojs/image": "^0.3.4",
     "@astrojs/mdx": "^0.8.3",
     "@astrojs/sitemap": "^0.3.0",
+    "@astrojs/svelte": "^1.0.0",
     "@astrojs/tailwind": "^0.2.5",
     "@swup/overlay-theme": "^1.1.1",
     "@tailwindcss/typography": "^0.5.4",
     "astro": "^1.0.0-rc.3",
+    "glob": "^8.0.3",
+    "medium-to-markdown": "^0.0.3",
     "release-it": "^15.3.0",
-    "swup": "^2.0.18"
+    "svelte": "^3.49.0",
+    "swup": "^2.0.18",
+    "xml-js": "^1.6.11"
   },
   "dependencies": {
+    "@storyblok/js": "^1.7.2",
     "astro-i18next": "^1.0.0-beta.3",
+    "axios": "^0.27.2",
     "wowjs": "^1.1.3"
   }
 }

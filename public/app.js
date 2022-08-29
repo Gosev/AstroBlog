@@ -1,4 +1,4 @@
-import Swup from 'swup'
+/*import Swup from 'swup'
 import SwupOverlayTheme from '@swup/overlay-theme';
 
 const swup = new Swup({
@@ -7,4 +7,4 @@ const swup = new Swup({
     duration: 600,
     direction: 'to-right',
   })]
-});
+});*/
