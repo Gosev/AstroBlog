@@ -1,5 +1,5 @@
 ---
-  const { title, image } = Astro.props
+  const { title, image, url } = Astro.props
   import i18next, { t } from "i18next";
 
 ---
@@ -12,6 +12,6 @@
     <h2 class="text-2xl font-bold text-gray-500 dark:text-gray-400">
       {title}
     </h2>
-    <a> {t("more_details")}</a>
+    <a class="underline" href={url}> {t("more_details")}</a>
   </div>
 </div>

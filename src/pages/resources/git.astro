@@ -5,11 +5,12 @@ import BasicCTA from '~/components/astro/ctas/BasicCTA.astro';
 import StepsFeatures from '~/components/astro/features/StepsFeatures.astro';
 import GenericHeroWithImage from '~/components/astro/hero/GenericHeroWithImage.astro';
 import ArticleList from '~/components/astro/blog/ArticleList.astro';
-import Payhip from '~/components/ressource/payhip.astro';
+import Gumroad from '~/components/ressource/gumroad.astro';
+
 
 ---
 
-<Layout title="Premiers pas avec Git & GitHub">
+<Layout title="Git & GitHub : the first steps">
 <main id="swup">
   <div class="p-10 w-full" style="height: 2rem;">
   </div>
@@ -21,12 +22,12 @@ import Payhip from '~/components/ressource/payhip.astro';
   {false && <StepsFeatures />}
   <div class="w-full flex flex-row content-center items-center place-content-center">
     <div class="w-full md:w-1/2 self-center">
-     <Payhip id="50sLf" class="mx-auto" />
+     <Gumroad slug="git-and-github-step-by-step" class="mx-auto" />
     </div>
   </div>
   <div class="flex flex-column w-full text-center p-5 content-center items-center ">
     <div>
-    <span>NB: Ce livre est également disponible via <a class="underline" href="https://amazon.fr/Git-GitHub-premiers-David-Hockley/dp/B0B4G37CG1">Amazon.fr</a></span>
+    <span>NB: This book is also available via <a class="underline" href="https://amazon.com/Git-Github-first-practical-examples/dp/B0B6LDF29K/">Amazon.com</a></span>
     </div>
   </div>
 </main>

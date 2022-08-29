@@ -21,7 +21,7 @@ const { default: Content, frontmatter, compiledContent } = Astro.props.post;
 
 ---
 
-<Layout title="AstroWind — Your website with Astro + Tailwind CSS">
+<Layout title={frontmatter.title + "| Kodaps"}>
   <article class="prose dark:prose-invert lg:prose-xl mx-auto p-5 mt-12">
     <h1>{frontmatter.title}</h1>
     {frontmatter.subtitle && <h2>{frontmatter.subtitle} </h2>}

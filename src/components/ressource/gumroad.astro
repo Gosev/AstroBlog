@@ -5,9 +5,8 @@ const { slug } = Astro.props;
 ---
 
 
-
 <script is:inline src="https://gumroad.com/js/gumroad-embed.js"></script>
-<div class="gumroad-product-embed"><a href="https://kodaps.gumroad.com/l/premiers-pas-avec-git-et-github">Loading...</a></div>
+<div class="gumroad-product-embed">
+  <a href={"https://kodaps.gumroad.com/l/"+slug}>Loading...</a>
+</div>
 
-<div class="payhip-embed-page" data-key="50sLf">...</div>
-<script type="text/javascript" is:inline src="https://payhip.com/embed-page.js?v=24u68984"></script>

@@ -24,7 +24,7 @@ console.log(Astro.props.post);
 
 ---
 
-<Layout title="AstroWind — Your website with Astro + Tailwind CSS">
+<Layout title={ frontmatter.title + "| Kodaps.dev" } >
   <article class="prose dark:prose-invert lg:prose-xl mx-auto p-5 mt-12">
     <h1>{frontmatter.title}</h1>
     <img src={frontmatter.img} />
