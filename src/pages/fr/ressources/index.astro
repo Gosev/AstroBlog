@@ -1,11 +1,15 @@
 ---
 import Layout from '~/layouts/Layout.astro';
-import Product from '~/components/ressource/product.astro';
+import ProductCard from '~/components/ressource/productcard.astro';
 ---
 
 
-<Layout title="Kodaps : les ressources">
+<Layout title="Kodaps: ressources">
   <main id="swup">
-      <Product />
+    <div><h1> Ressources </h1></div>
+    <div class="max-w-xl mx-auto">
+      <ProductCard image="/images/products/git2.jpg" title="Git & GitHub: Les permiers pas" url="/fr/resources/git" />
+      <ProductCard image="/images/products/js_thumb.jpg" title="JavaScript: The First Steps" url="/resources/javascript" />
+    </div>
   </main>
   </Layout>
