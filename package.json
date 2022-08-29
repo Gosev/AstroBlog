@@ -1,7 +1,7 @@
 {
   "name": "@kodaps/kodaps.dev",
   "description": "Website using Astro + Tailwind CSS.",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "scripts": {
     "dev": "astro dev",
